@@ -218,27 +218,31 @@
   - [x] 가운데 포즈 학습
   - [x] 오른쪽 포즈 학습
 - [x] 모델 파일 `my_model/` 폴더에 배치
-- [ ] 게임 로직 구현
-  - [ ] `js/gameEngine.js` - 게임 상태 관리
-  - [ ] `js/gameEngine.js` - 아이템 생성 및 낙하
-  - [ ] `js/gameEngine.js` - 충돌 감지 및 점수 처리
-  - [ ] `js/gameEngine.js` - 단계 시스템
-  - [ ] `js/main.js` - 포즈 → 바구니 위치 연동
-- [ ] UI 구현
-  - [ ] `index.html` - 게임 화면 구성 (3개 구역, 바구니, 아이템)
-  - [ ] `css/style.css` - 게임 스타일 (구역 구분, 애니메이션)
-  - [ ] 점수, 레벨, 미스 카운트 표시
-- [ ] 로컬 테스트 완료
-- [ ] GitHub에 push
-- [ ] GitHub Pages 배포 완료
+- [x] 게임 로직 구현
+  - [x] `js/gameEngine.js` - 게임 상태 관리
+  - [x] `js/gameEngine.js` - 아이템 생성 및 낙하
+  - [x] `js/gameEngine.js` - 충돌 감지 및 점수 처리
+  - [x] `js/gameEngine.js` - 단계 시스템
+  - [x] `js/main.js` - 포즈 → 바구니 위치 연동
+- [x] UI 구현
+  - [x] `index.html` - 게임 화면 구성 (3개 구역, 바구니, 아이템)
+  - [x] `css/style.css` - 게임 스타일 (구역 구분, 애니메이션)
+  - [x] 점수, 레벨, 미스 카운트 표시
+- [x] 로컬 테스트 완료
+- [x] GitHub에 push
+- [x] GitHub Pages 배포 완료
 
 ---
 
 ## 🚀 다음 단계
 
-1. ✅ 게임 규칙 완성 (현재 단계)
-2. Teachable Machine에서 3개 포즈 학습 (왼쪽, 가운데, 오른쪽)
-3. 모델 파일 다운로드 및 `my_model/` 폴더에 배치
-4. 게임 로직 구현 (AI 코딩 도구 활용 권장)
-5. 로컬 테스트 및 디버깅
-6. GitHub Pages 배포!
+1. ✅ 게임 규칙 완성
+2. ✅ Teachable Machine에서 3개 포즈 학습 (왼쪽, 가운데, 오른쪽)
+3. ✅ 모델 파일 다운로드 및 `my_model/` 폴더에 배치
+4. ✅ 게임 로직 구현 (AI 코딩 도구 활용)
+5. ✅ 로컬 테스트 및 디버깅
+6. ✅ GitHub Pages 배포 완료!
+
+**🎉 Catch Zone 게임이 완성되었습니다!**
+
+👉 [게임 플레이하기](https://idealbong.github.io/tm-pose-catchzone/)
