@@ -32,6 +32,7 @@ class GameEngine {
     this.itemSpawnTimer = null;
     this.animationFrameId = null;
     this.levelTimeRemaining = 20; // 각 단계 20초
+    this.waitingForLevelTransition = false; // 레벨 전환 대기 중
 
     // 콜백
     this.onScoreChange = null;
@@ -90,10 +91,14 @@ class GameEngine {
   startLevelTimer() {
     this.levelTimer = setInterval(() => {
       this.levelTimeRemaining--;
+      this.notifyLevelChange();
 
-      // 레벨 종료 - 다음 레벨로
+      // 레벨 시간 종료 - 아이템 생성만 중지
       if (this.levelTimeRemaining <= 0) {
-        this.levelUp();
+        clearInterval(this.levelTimer);
+        this.levelTimer = null;
+        this.stopItemSpawning();
+        this.waitingForLevelTransition = true;
       }
     }, 1000);
   }
@@ -102,29 +107,32 @@ class GameEngine {
    * 레벨업
    */
   levelUp() {
-    // 레벨업 시 게임 일시 정지
-    this.stopItemSpawning();
-
     // 레벨업 메시지 표시
     const prevLevel = this.currentLevel;
     this.currentLevel++;
     this.levelTimeRemaining = 20;
+    this.waitingForLevelTransition = false;
 
     if (this.onLevelUp) {
       this.onLevelUp(prevLevel, this.currentLevel);
     }
 
-    // 2초 후 다음 레벨 시작
+    // 레벨 완료 메시지가 완전히 사라진 후(1.5초) 레벨 시작 메시지 표시
     setTimeout(() => {
       if (!this.isGameActive) return;
-
-      this.notifyLevelChange();
-      this.startItemSpawning();
 
       if (this.onLevelStart) {
         this.onLevelStart(this.currentLevel);
       }
-    }, 2000);
+
+      // 레벨 시작 메시지가 완전히 사라진 후(1.5초) 게임 시작
+      setTimeout(() => {
+        if (!this.isGameActive) return;
+
+        this.startLevelTimer();
+        this.startItemSpawning();
+      }, 1500);
+    }, 1500);
   }
 
   /**
@@ -228,6 +236,11 @@ class GameEngine {
 
       // UI 업데이트
       this.notifyItemUpdate();
+
+      // 레벨 전환 대기 중이고 모든 아이템이 사라졌으면 레벨업
+      if (this.waitingForLevelTransition && this.items.length === 0) {
+        this.levelUp();
+      }
 
       // 다음 프레임 요청
       this.animationFrameId = requestAnimationFrame(update);
