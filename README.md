@@ -1,43 +1,46 @@
-# Teachable Machine Pose Model Template
+# Catch Zone - 포즈 인식 게임
 
-Teachable Machine에서 학습한 Pose 모델을 웹에서 테스트할 수 있는 템플릿입니다.
+Teachable Machine 포즈 모델을 활용한 **Catch Zone** 게임입니다. 포즈로 바구니를 움직여 떨어지는 과일을 받고, 폭탄을 피하세요!
 
-## 📋 개요
+## 🎮 게임 소개
 
-이 프로젝트는 학생들이 [Teachable Machine](https://teachablemachine.withgoogle.com/)에서 포즈 인식 모델을 학습한 후, 해당 모델을 GitHub에 업로드하고 GitHub Pages를 통해 실시간으로 테스트할 수 있도록 만들어진 템플릿입니다.
+**Catch Zone**는 포즈 인식 기술을 활용한 인터랙티브 게임입니다. 플레이어는 자신의 몸 또는 얼굴 움직임으로 게임 속 바구니를 제어하여 과일을 수집하고, 폭탄을 피해야 합니다.
 
-### 현재 포함된 예시 모델
+### 게임 방법
 
-이 저장소에는 **얼굴 방향 인식 모델**이 포함되어 있습니다:
-- **왼쪽**: 얼굴이 왼쪽을 바라볼 때
-- **오른쪽**: 얼굴이 오른쪽을 바라볼 때
-- **정면**: 얼굴이 정면을 바라볼 때
-- **위**: 얼굴이 위를 바라볼 때
-- **아래**: 얼굴이 아래를 바라볼 때
+- **왼쪽/가운데/오른쪽 포즈**로 바구니 위치 제어
+- **과일(🍎🍐🍊)** 받으면 점수 획득
+- **폭탄(💣)** 받으면 즉시 게임 오버
+- **과일을 2번 놓치면** 게임 오버
+- **레벨이 오를수록** 낙하 속도 증가
 
-이 모델은 데모용이며, 자신만의 포즈 인식 모델로 교체하여 사용할 수 있습니다.
+### 점수 체계
 
-## 🚀 사용 방법
+| 아이템 | 점수 |
+|--------|------|
+| 사과 🍎 | +100점 |
+| 배 🍐 | +150점 |
+| 오렌지 🍊 | +200점 |
+| 폭탄 💣 | 게임 오버 |
 
-### 1. Teachable Machine에서 모델 학습 및 다운로드
+### 레벨 시스템
 
-1. [Teachable Machine](https://teachablemachine.withgoogle.com/)에 접속
-2. "Pose Project" 선택
-3. 원하는 포즈들을 학습
-4. "Export Model" → "Download" 선택하여 모델 파일 다운로드
+- 각 레벨은 **20초** 진행
+- 레벨이 오를수록 아이템 낙하 속도 증가
+- 1단계: 2.0초 낙하 → 2단계: 1.8초 → 3단계: 1.6초...
+- 단계마다 0.2초씩 빨라짐
 
-### 2. 모델 파일 추가
+## 🚀 플레이하기
 
-다운로드한 모델 파일을 `my_model/` 폴더에 넣어주세요:
-- `my_model/model.json`
-- `my_model/weights.bin`
-- `my_model/metadata.json`
+### 온라인 플레이
 
-### 3. 로컬에서 테스트
+👉 **[GitHub Pages에서 바로 플레이](https://idealbong.github.io/tm-pose-catchzone/)**
+
+### 로컬에서 실행
 
 브라우저 보안 정책으로 인해 로컬 웹 서버가 필요합니다.
 
-**Python 사용 (Python 3):**
+**Python 사용:**
 ```bash
 python3 -m http.server 8000
 ```
@@ -53,248 +56,117 @@ npx http-server -p 8000
 
 브라우저에서 `http://localhost:8000` 접속
 
-### 4. GitHub Pages로 배포
-
-1. 이 저장소를 자신의 GitHub 계정으로 Fork 또는 복사
-2. 모델 파일을 `my_model/` 폴더에 추가
-3. GitHub 저장소 설정에서 Pages 활성화:
-   - Settings → Pages
-   - Source: Deploy from a branch
-   - Branch: main / (root) 선택
-   - Save
-4. 몇 분 후 `https://<username>.github.io/<repository-name>/`에서 접속 가능
-
-## ✨ 주요 기능
-
-- ✅ 실시간 웹캠 포즈 인식
-- ✅ 포즈 스켈레톤 및 키포인트 시각화
-- ✅ 예측 결과 확률 표시
-- ✅ 최고 확률 클래스 강조 표시
-- ✅ Start/Stop 버튼으로 웹캠 제어
-
 ## 🛠 기술 스택
 
-- TensorFlow.js 1.3.1
-- Teachable Machine Pose Library 0.8
-- Vanilla JavaScript
-- HTML5 Canvas
+- **TensorFlow.js** 1.3.1 - 머신러닝 모델 실행
+- **Teachable Machine Pose** 0.8 - 포즈 인식
+- **Vanilla JavaScript** - 게임 로직
+- **HTML5 Canvas** - 웹캠 및 포즈 시각화
 
 ## 📁 프로젝트 구조
 
 ```
-tm-pose-template/
-├── index.html              # 화면 구조와 JS/CSS를 불러오는 앱의 엔트리 HTML
+tm-pose-catchzone/
+├── index.html              # 게임 UI 및 레이아웃
 ├── css/
-│   └── style.css          # 페이지 전체 스타일과 게임 UI 디자인
+│   └── style.css          # 게임 스타일 및 애니메이션
 ├── js/
-│   ├── main.js            # 포즈 인식과 게임 로직을 초기화하고 서로 연결하는 진입점
-│   ├── poseEngine.js      # 웹캠 + TM 포즈 모델 로딩 및 예측(label) 생성 담당
-│   ├── gameEngine.js      # 게임 단계, 명령, 점수, 제한시간 등 게임 규칙 전체를 담당
-│   └── stabilizer.js      # 예측값을 안정화(히스테리시스/필터링)해 튀는 오류를 줄임
-├── my_model/              # Teachable Machine 모델 파일 위치
-│   ├── model.json         # TM에서 학습한 포즈 모델의 구조(네트워크 아키텍처) 정보
-│   ├── metadata.json      # 클래스 이름 등 모델 메타데이터 정보
-│   └── weights.bin        # 포즈 모델이 학습한 실제 가중치 데이터
-├── GAME_RULE.md           # 🎮 게임 규칙 정의 파일 (AI 코딩 시 참고)
+│   ├── main.js            # 애플리케이션 진입점
+│   ├── poseEngine.js      # 포즈 인식 엔진
+│   ├── gameEngine.js      # Catch Zone 게임 로직
+│   └── stabilizer.js      # 예측 안정화
+├── my_model/              # Teachable Machine 모델 파일
+│   ├── model.json         # 포즈 모델 구조
+│   ├── metadata.json      # 모델 메타데이터
+│   └── weights.bin        # 학습된 가중치
+├── GAME_RULE.md           # 게임 규칙 상세 문서
 └── README.md
 ```
 
-### 파일 설명
+## 🎯 포즈 모델
 
-#### `GAME_RULE.md` 🎮
-- **게임 규칙 정의 파일**
-- 게임 제목, 설명, 목표, 점수 체계, 필요한 포즈 등을 구조화하여 작성
-- AI 코딩 도구(Claude Code, Cursor 등)가 이 파일을 읽고 자동으로 게임 코드 생성
-- 게임 개발 시 가장 먼저 작성해야 하는 파일
-- 템플릿 형식으로 제공되어 쉽게 작성 가능
+이 게임은 **3가지 포즈**를 인식합니다:
 
-#### `js/main.js`
-- 애플리케이션의 진입점
-- PoseEngine, GameEngine, Stabilizer를 초기화하고 연결
-- 웹캠과 캔버스 설정
-- UI 이벤트 처리 (Start/Stop 버튼)
+| 포즈 | 설명 | 게임 내 동작 |
+|------|------|------------|
+| 왼쪽 | 몸/얼굴을 왼쪽으로 | 바구니가 LEFT 구역으로 이동 👈 |
+| 가운데 | 정면을 바라봄 | 바구니가 CENTER 구역에 위치 😊 |
+| 오른쪽 | 몸/얼굴을 오른쪽으로 | 바구니가 RIGHT 구역으로 이동 👉 |
 
-#### `js/poseEngine.js`
-- Teachable Machine 포즈 모델 로드
-- 웹캠 스트림 관리
-- 실시간 포즈 예측 수행
-- 포즈 스켈레톤 및 키포인트 그리기
+## 💡 나만의 게임 만들기
 
-#### `js/gameEngine.js`
-- 게임 로직 관리 (선택적 기능)
-- 점수, 레벨, 타이머 관리
-- 게임 명령 발급 및 검증
-- 향후 게임 확장을 위한 기반 제공
+이 템플릿을 활용하여 자신만의 포즈 인식 게임을 만들 수 있습니다!
 
-#### `js/stabilizer.js`
-- 예측 결과 안정화
-- 히스테리시스 필터링으로 순간적인 오인식 방지
-- 예측 확률 임계값 처리
-- 최빈값 기반 평활화
+### Step 1: 게임 규칙 설계
 
-## 🎮 포즈 게임 만들기
+[GAME_RULE.md](GAME_RULE.md) 파일을 수정하여 게임 규칙을 정의하세요.
 
-이 템플릿을 활용하여 자신만의 포즈 인식 게임을 만들 수 있습니다. 다음 3단계 워크플로우를 따라주세요:
+- 게임 제목과 설명
+- 필요한 포즈 목록
+- 점수 체계
+- 시간 설정
+- 게임 오버 조건
 
-### Step 1: 게임 규칙 설계 - GAME_RULE.md 작성
+### Step 2: Teachable Machine 모델 학습
 
-먼저 만들고자 하는 게임의 규칙을 설계합니다. [GAME_RULE.md](GAME_RULE.md) 파일을 열어 템플릿을 따라 작성하세요.
-
-**GAME_RULE.md에 포함할 내용:**
-- ✅ 게임 제목과 설명
-- ✅ 게임 목표와 기본 규칙
-- ✅ 필요한 포즈 목록 (Teachable Machine 클래스)
-- ✅ 점수 체계 (점수 획득/차감 규칙)
-- ✅ 시간 설정 (제한시간, 명령 속도 등)
-- ✅ 추가 기능 (선택사항)
-
-**예시 게임 규칙:**
-```markdown
-# 게임 제목: 얼굴 방향 따라하기
-
-## 게임 규칙
-- 화면에 랜덤하게 방향이 표시됩니다
-- 제한시간 내에 해당 방향으로 얼굴을 돌리세요
-- 정확한 포즈: +10점
-- 60초 동안 최대한 높은 점수를 획득하세요!
-
-## 필요한 포즈
-왼쪽, 오른쪽, 위, 아래, 정면
-```
-
-> 💡 **Tip**: GAME_RULE.md를 먼저 작성하면 AI 코딩 도구(Claude Code, Cursor 등)가 게임 규칙을 이해하고 더 정확한 코드를 생성할 수 있습니다!
-
-### Step 2: Teachable Machine - 포즈 모델 학습
-
-[GAME_RULE.md](GAME_RULE.md)에서 정의한 포즈들을 Teachable Machine에서 학습합니다.
-
-**학습 단계:**
-
-1. **Teachable Machine 접속**
-   - [https://teachablemachine.withgoogle.com/](https://teachablemachine.withgoogle.com/)
-   - "Pose Project" 선택
-
-2. **클래스 생성**
-   - GAME_RULE.md의 "필요한 포즈 목록"을 참고하여 각 포즈마다 클래스 생성
-   - 예: "왼쪽", "오른쪽", "위", "아래", "정면"
-
-3. **샘플 수집**
-   - 각 클래스마다 웹캠으로 포즈 샘플 수집 (최소 50개 이상 권장)
-   - 다양한 각도와 거리에서 촬영하여 정확도 향상
-   - 배경이 다른 환경에서도 테스트
-
-4. **모델 학습**
-   - "Train Model" 버튼 클릭
-   - 학습이 완료될 때까지 대기
-
-5. **모델 다운로드**
-   - "Export Model" 클릭
-   - "Download" 탭 선택
-   - "Download my model" 버튼 클릭하여 파일 다운로드
-
-6. **모델 파일 배치**
-   - 다운로드한 파일의 압축을 풀어 `my_model/` 폴더에 배치
-   ```
-   my_model/
-   ├── model.json
-   ├── metadata.json
-   └── weights.bin
-   ```
-
-> 💡 **Tip**: GAME_RULE.md에 정의한 포즈 목록을 보면서 학습하면 누락 없이 모든 포즈를 학습할 수 있습니다!
+1. [Teachable Machine](https://teachablemachine.withgoogle.com/) 접속
+2. "Pose Project" 선택
+3. GAME_RULE.md에 정의한 포즈들을 학습
+4. 각 포즈당 50개 이상 샘플 수집 권장
+5. 모델 학습 후 다운로드
+6. `my_model/` 폴더에 파일 배치
 
 ### Step 3: 게임 로직 구현
 
-[GAME_RULE.md](GAME_RULE.md)에 정의한 게임 규칙을 코드로 구현합니다.
+**AI 코딩 도구 활용 (권장):**
 
-**🤖 AI 코딩 도구 활용 (권장)**
-
-Claude Code, Cursor, GitHub Copilot 등의 AI 도구를 사용하면 쉽게 구현할 수 있습니다:
+Claude Code, Cursor 등을 사용하면 쉽게 구현 가능합니다:
 
 ```
-💬 AI에게 요청하는 방법:
-
 "GAME_RULE.md 파일을 읽고, 정의된 게임 규칙대로
-js/gameEngine.js와 js/main.js를 수정해줘.
-index.html과 css/style.css도 게임 UI를 추가해줘."
+js/gameEngine.js와 js/main.js를 수정해줘."
 ```
 
-AI가 GAME_RULE.md를 읽고 자동으로:
-- ✅ 게임 타이머 설정
-- ✅ 점수 체계 구현
-- ✅ 명령 발급 로직 작성
-- ✅ UI 업데이트 코드 생성
-- ✅ 스타일 적용
+**직접 코딩:**
 
-**📝 직접 코딩하는 경우**
+- `js/gameEngine.js`: 게임 로직 수정
+- `js/main.js`: UI 연동
+- `index.html`: 게임 화면 구성
+- `css/style.css`: 스타일 적용
 
-[js/gameEngine.js](js/gameEngine.js)는 이미 기본적인 게임 프레임워크를 제공합니다:
-- ✅ 점수 관리 (`score`, `addScore()`)
-- ✅ 레벨 시스템 (`level`)
-- ✅ 타이머 기능 (`timeLimit`, `startTimer()`)
-- ✅ 게임 명령 발급 (`issueNewCommand()`)
-- ✅ 포즈 감지 처리 (`onPoseDetected()`)
+### Step 4: 배포
 
-**커스터마이징 예시:**
-
-```javascript
-// js/main.js에서 게임 모드 활성화
-async function init() {
-  // ... 기존 초기화 코드 ...
-
-  // GAME_RULE.md에서 정의한 설정 적용
-  startGameMode({
-    timeLimit: 60,  // GAME_RULE.md의 "시간 설정" 참고
-    commands: ["왼쪽", "오른쪽", "위", "아래"]  // GAME_RULE.md의 "필요한 포즈" 참고
-  });
-}
-```
-
-**게임 UI 추가:**
-
-[index.html](index.html)에 게임 UI 요소를 추가:
-```html
-<div id="game-info">
-  <div id="score">점수: 0</div>
-  <div id="timer">남은 시간: 60초</div>
-  <div id="command">명령: 왼쪽을 보세요!</div>
-</div>
-```
-
-**스타일 수정:**
-
-[css/style.css](css/style.css)에서 게임 UI 스타일 추가
-
-### 완성 후 테스트 및 배포
-
-1. **로컬 테스트**
-   ```bash
-   python3 -m http.server 8000
-   # 또는
-   npx http-server -p 8000
-   ```
-
-2. **GitHub Pages 배포**
-   - GitHub 저장소에 push
-   - Settings → Pages에서 배포 활성화
-   - 전 세계 누구나 접속 가능!
+1. GitHub 저장소에 push
+2. Settings → Pages 활성화
+3. 전 세계 누구나 플레이 가능!
 
 ## 🎓 교육 활용
 
-이 템플릿은 다음과 같은 교육 목적으로 활용할 수 있습니다:
+이 프로젝트는 다음과 같은 학습에 활용할 수 있습니다:
 
-- 머신러닝/AI 기초 학습
-- 포즈 인식 기술 이해
-- 웹 개발 실습 (HTML/CSS/JavaScript)
-- 게임 로직 설계 및 구현
-- GitHub 및 버전 관리 학습
-- GitHub Pages를 통한 배포 경험
+- ✅ 머신러닝/AI 기초 (Teachable Machine)
+- ✅ 포즈 인식 기술 이해
+- ✅ JavaScript 게임 개발
+- ✅ HTML/CSS UI 설계
+- ✅ Git/GitHub 버전 관리
+- ✅ GitHub Pages 배포
+
+## 📝 게임 규칙 상세
+
+전체 게임 규칙은 [GAME_RULE.md](GAME_RULE.md)를 참고하세요.
 
 ## 👨‍💻 만든 사람
 
 **Sangbong Lee**
 - Email: idealbong@gmail.com
+- GitHub: [@idealbong](https://github.com/idealbong)
 
 ## 📝 라이선스
 
 이 프로젝트는 교육 목적으로 자유롭게 사용 가능합니다.
+
+---
+
+## 🎮 즐거운 게임 되세요!
+
+포즈로 바구니를 움직여 과일을 받고, 폭탄을 피해보세요! 🍎🍐🍊
