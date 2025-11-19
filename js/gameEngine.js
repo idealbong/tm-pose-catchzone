@@ -187,15 +187,22 @@ class GameEngine {
         // 위치 증가 (초당 100% / dropTime)
         item.position += (100 / item.dropTime) * deltaTime;
 
-        // 화면 하단 도달 (100% 이상)
-        if (item.position >= 100) {
-          // 충돌 감지
+        // 바구니 위치 도달 (85% 이상) - 충돌 감지 영역
+        if (item.position >= 85 && !item.caught) {
           if (this.checkCollision(item)) {
+            // 바구니와 충돌 - 즉시 수집
             this.handleItemCatch(item);
-          } else {
+            item.caught = true; // 처리됨 표시
+            this.items.splice(i, 1); // 아이템 즉시 제거
+            continue;
+          }
+        }
+
+        // 화면 하단 도달 (100% 이상) - 놓침 처리
+        if (item.position >= 100) {
+          if (!item.caught) {
             this.handleItemMiss(item);
           }
-
           // 아이템 제거
           this.items.splice(i, 1);
         }
