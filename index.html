@@ -2,20 +2,81 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <title>Teachable Machine Pose Model</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Catch Zone - 포즈 게임</title>
     <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
-    <h1>Teachable Machine Pose Model</h1>
+    <h1>🎮 Catch Zone</h1>
+    <p class="subtitle">포즈로 바구니를 움직여 과일을 받으세요!</p>
+
+    <!-- 컨트롤 버튼 -->
     <div class="button-container">
       <button type="button" id="startBtn" onclick="init()">Start</button>
       <button type="button" id="stopBtn" onclick="stop()" disabled>Stop</button>
     </div>
-    <div class="canvas-container">
-      <canvas id="canvas"></canvas>
-      <div id="max-prediction"></div>
+
+    <!-- 게임 정보 -->
+    <div class="game-info">
+      <div class="info-item">
+        <span class="info-label">점수</span>
+        <span class="info-value" id="score">0</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">레벨</span>
+        <span class="info-value" id="level">1</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">남은 시간</span>
+        <span class="info-value" id="level-time">20</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">미스</span>
+        <span class="info-value" id="miss-count">0/2</span>
+      </div>
     </div>
-    <div id="label-container"></div>
+
+    <!-- 메인 게임 영역 -->
+    <div class="main-container">
+      <!-- 왼쪽: 웹캠 -->
+      <div class="webcam-section">
+        <div class="canvas-container">
+          <canvas id="canvas"></canvas>
+          <div id="current-pose" class="current-pose">감지 중...</div>
+        </div>
+      </div>
+
+      <!-- 오른쪽: 게임 화면 -->
+      <div class="game-section">
+        <div id="game-area" class="game-area">
+          <!-- 구역 구분선 -->
+          <div class="zone-divider zone-divider-1"></div>
+          <div class="zone-divider zone-divider-2"></div>
+
+          <!-- 구역 라벨 -->
+          <div class="zone-label zone-label-left">LEFT</div>
+          <div class="zone-label zone-label-center">CENTER</div>
+          <div class="zone-label zone-label-right">RIGHT</div>
+
+          <!-- 바구니 (포즈로 제어) -->
+          <div id="basket" class="basket zone-center">🧺</div>
+
+          <!-- 아이템들이 동적으로 생성됨 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 게임 안내 -->
+    <div class="instructions">
+      <h3>게임 방법</h3>
+      <ul>
+        <li>왼쪽/가운데/오른쪽 포즈로 바구니를 움직이세요</li>
+        <li>과일(🍎🍐🍊)을 받으면 점수 획득!</li>
+        <li>폭탄(💣)을 받으면 게임 오버!</li>
+        <li>과일을 2번 놓치면 게임 오버!</li>
+        <li>레벨이 오를수록 빨라집니다!</li>
+      </ul>
+    </div>
 
     <!-- Teachable Machine 라이브러리 -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
