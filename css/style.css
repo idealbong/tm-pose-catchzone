@@ -179,6 +179,50 @@ button:disabled {
   overflow: hidden;
 }
 
+/* 레벨 메시지 */
+.level-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 24px 40px;
+  border-radius: 16px;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  white-space: pre-line;
+  z-index: 100;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  animation: levelMessagePop 0.3s ease-out;
+}
+
+.level-message.fade-out {
+  animation: levelMessageFadeOut 0.5s ease-out forwards;
+}
+
+@keyframes levelMessagePop {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes levelMessageFadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
 /* 구역 구분선 */
 .zone-divider {
   position: absolute;

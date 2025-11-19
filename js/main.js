@@ -140,6 +140,43 @@ function setupGameCallbacks() {
       alert(message);
     }, 100);
   });
+
+  // 레벨업 시 메시지 표시
+  gameEngine.setLevelUpCallback((prevLevel, newLevel) => {
+    showLevelMessage(`🎉 Level ${prevLevel} 완료!\n준비하세요...`);
+  });
+
+  // 새 레벨 시작 메시지
+  gameEngine.setLevelStartCallback((level) => {
+    showLevelMessage(`🚀 Level ${level} 시작!`);
+  });
+}
+
+/**
+ * 레벨 메시지 표시
+ */
+function showLevelMessage(message) {
+  const gameArea = document.getElementById("game-area");
+
+  // 기존 메시지 제거
+  const existingMsg = gameArea.querySelector(".level-message");
+  if (existingMsg) {
+    existingMsg.remove();
+  }
+
+  // 메시지 엘리먼트 생성
+  const messageDiv = document.createElement("div");
+  messageDiv.className = "level-message";
+  messageDiv.textContent = message;
+  gameArea.appendChild(messageDiv);
+
+  // 1초 후 페이드아웃
+  setTimeout(() => {
+    messageDiv.classList.add("fade-out");
+    setTimeout(() => {
+      messageDiv.remove();
+    }, 500);
+  }, 1000);
 }
 
 /**

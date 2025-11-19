@@ -40,6 +40,8 @@ class GameEngine {
     this.onGameEnd = null;
     this.onBasketMove = null;
     this.onItemUpdate = null;
+    this.onLevelUp = null; // 레벨업 콜백
+    this.onLevelStart = null; // 레벨 시작 콜백
   }
 
   /**
@@ -100,13 +102,29 @@ class GameEngine {
    * 레벨업
    */
   levelUp() {
+    // 레벨업 시 게임 일시 정지
+    this.stopItemSpawning();
+
+    // 레벨업 메시지 표시
+    const prevLevel = this.currentLevel;
     this.currentLevel++;
     this.levelTimeRemaining = 20;
-    this.notifyLevelChange();
 
-    // 아이템 생성 속도 재설정
-    this.stopItemSpawning();
-    this.startItemSpawning();
+    if (this.onLevelUp) {
+      this.onLevelUp(prevLevel, this.currentLevel);
+    }
+
+    // 2초 후 다음 레벨 시작
+    setTimeout(() => {
+      if (!this.isGameActive) return;
+
+      this.notifyLevelChange();
+      this.startItemSpawning();
+
+      if (this.onLevelStart) {
+        this.onLevelStart(this.currentLevel);
+      }
+    }, 2000);
   }
 
   /**
@@ -378,6 +396,14 @@ class GameEngine {
 
   setGameEndCallback(callback) {
     this.onGameEnd = callback;
+  }
+
+  setLevelUpCallback(callback) {
+    this.onLevelUp = callback;
+  }
+
+  setLevelStartCallback(callback) {
+    this.onLevelStart = callback;
   }
 
   /**
